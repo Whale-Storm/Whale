@@ -60,7 +60,7 @@ Building disni.jar and rdmachannel-core.jar, you just only see [RDMA-Channel](ht
 ## 4.1 Buidling Benchmark
 Whale benchmark code is maintained using [Maven](http://maven.apache.org/). Generate the excutable jar by running
 ```
-cd benchmark/benchmark-xxxx
+cd benchmark/benchmark-xxx.jar
 mvn clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
 ```
 
