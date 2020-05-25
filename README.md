@@ -41,14 +41,14 @@ Dependent on RDMA jars
 Storm-client module source code is maintained using [Maven](http://maven.apache.org/). Generate the excutable jar by running
 ```
 cd storm-client
-mvan clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
+mvn clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
 ```
 
 ### whale-rdma.jar
 Whale-rdma module source code is maintained using [Maven](http://maven.apache.org/). Generate the excutable jar by running
 ```
 cd whale-rdma
-mvan clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
+mvn clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
 ```
 
 ### disni.jar and rdmachannel-core.jar
@@ -61,7 +61,7 @@ Building disni.jar and rdmachannel-core.jar, you just only see [RDMA-Channel](ht
 Whale benchmark code is maintained using [Maven](http://maven.apache.org/). Generate the excutable jar by running
 ```
 cd benchmark/benchmark-xxxx
-mvan clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
+mvn clean install -Dmaven.test.skip=true -Dcheckstyle.skip=true
 ```
 
 ## 4.2 Running Benchmark
