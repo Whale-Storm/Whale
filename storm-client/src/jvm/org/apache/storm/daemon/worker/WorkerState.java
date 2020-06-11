@@ -39,6 +39,7 @@ import org.apache.storm.messaging.*;
 import org.apache.storm.multicast.io.ExportException;
 import org.apache.storm.multicast.io.ImportException;
 import org.apache.storm.multicast.model.BalancedPartialMulticastGraph;
+import org.apache.storm.multicast.model.MulticastID;
 import org.apache.storm.serialization.KryoTupleSerializer;
 import org.apache.storm.task.WorkerTopologyContext;
 import org.apache.storm.tuple.AddressedTuple;
@@ -260,6 +261,8 @@ public class WorkerState {
 
     // Whale-Multicast
     private BalancedPartialMulticastGraph<String> multicastGraph;
+    private MulticastID multicastID;
+
     public WorkerState(Map<String, Object> conf, IContext mqContext, String topologyId, String assignmentId, int port, String workerId,
                        Map<String, Object> topologyConf, IStateStorage stateStorage, IStormClusterState stormClusterState)
             throws IOException, InvalidTopologyException, ExportException, ImportException {
@@ -424,6 +427,25 @@ public class WorkerState {
 
     public void refreshStormActive() {
         refreshStormActive(() -> refreshActiveTimer.schedule(0, this::refreshStormActive));
+    }
+
+    /**
+     * 与NodeInfo进行重新连接，用于流多播动态切换
+     * @param nodeInfo
+     */
+    public void reconnectConnection(NodeInfo nodeInfo){
+        mqContext.connect(
+                topologyId,
+                nodeInfo.get_node(),    // Host
+                nodeInfo.get_port().iterator().next().intValue());     // Port
+    }
+
+    /**
+     * 与相应的NodeInfo断开连接，用于流多播动态切换
+     * @param nodeInfo
+     */
+    public void closeConnection(NodeInfo nodeInfo){
+        cachedNodeToPortSocket.get().get(nodeInfo).close();
     }
 
     public void refreshStormActive(Runnable callback) {
@@ -829,5 +851,9 @@ public class WorkerState {
 
     public interface ILocalTransferCallback {
         void transfer(List<AddressedTuple> tupleBatch);
+    }
+
+    public void setMulticastID(MulticastID multicastID) {
+        this.multicastID = multicastID;
     }
 }

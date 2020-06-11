@@ -157,11 +157,15 @@ public class SpoutExecutor extends Executor {
                         if(currentStatus.equals(ModelConstants.NegativeSacleDown) && (newDegree<outDegree)){
                             //多播控制配置信息 断开连接与创立新的连接
                             ControlMsg controlMsg = MulticastController.generateControlMsg(currentMulticastTree, outDegree, newDegree);
+                            //更新系统当前多播结构树
+                            conf.put("nonblockMultiTree", controlMsg.getGraph());
                             String streamId = ObjectReader.getString(conf.get(Config.TOPOLOGY_MULTICAST_BROADCASTBOLT_STREMAID));
                             outputCollectors.get(0).emit(streamId, new Values("controlMsg",0,0,"controlMsg",ControlMsg.objectToJson(controlMsg),System.currentTimeMillis()));
                         }else if(currentStatus.equals(ModelConstants.ActiveSacleUp) && (newDegree>outDegree)){
                             //多播控制配置信息 断开连接与创立新的连接
                             ControlMsg controlMsg = MulticastController.generateControlMsg(currentMulticastTree, outDegree, newDegree);
+                            //更新系统当前多播结构树
+                            conf.put("nonblockMultiTree", controlMsg.getGraph());
                             String streamId = ObjectReader.getString(conf.get(Config.TOPOLOGY_MULTICAST_BROADCASTBOLT_STREMAID));
                             outputCollectors.get(0).emit(streamId, new Values("controlMsg",0,0,"controlMsg",ControlMsg.objectToJson(controlMsg),System.currentTimeMillis()));
                         }

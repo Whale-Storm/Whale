@@ -10,13 +10,14 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * locate org.apache.storm.multicast.model
  * Created by master on 2019/10/31.
  */
 public class DynamicSwitchScaleControllerTest {
-    private static final int componentNumber = 15;
+    private static int componentNumber = 15;
 
     @Test
     public void testBalancedPartialScaleUp() {
@@ -67,7 +68,7 @@ public class DynamicSwitchScaleControllerTest {
 
         long start = System.currentTimeMillis();
         ControlMsg newOne = DynamicSwitchController.change(graph, 3, 1);
-        System.out.println("dynamic swtich time: "+ (System.currentTimeMillis() - start) +" ms \n");
+        System.out.println("dynamic switch time: "+ (System.currentTimeMillis() - start) +" ms \n");
         System.out.println("\n");
 
         BreadthFirstIterator<String, DefaultEdge> bfi2 = new BreadthFirstIterator<>(newOne.getGraph(), "component1-1-0-1");
@@ -89,6 +90,16 @@ public class DynamicSwitchScaleControllerTest {
 //                .toArray(String[]::new);
 //        System.out.println(Arrays.toString(t));
 
+    }
+
+    @Test
+    public void testCrateGraph(){
+        componentNumber = 481;
+        for (int i = 1; i < 20; i++) {
+            DirectedAcyclicGraph<String, DefaultEdge> graph = createGraph(i);
+            List<String> result = new ArrayList<>(graph.vertexSet());
+            System.out.println(result.get(result.size()-1));
+        }
     }
 
     private static DirectedAcyclicGraph<String, DefaultEdge> createGraph(int degree) {
