@@ -261,7 +261,7 @@
         <json-simple.version>1.1</json-simple.version>
         <ring.version>1.6.2</ring.version>
         <ring-json.version>0.4.0</ring-json.version>
-        <jetty.version>9.4.7.v20170914</jetty.version>
+        <jetty.version>10.0.10</jetty.version>
         <clojure.tools.logging.version>0.2.3</clojure.tools.logging.version>
         <clojure.math.numeric-tower.version>0.0.1</clojure.math.numeric-tower.version>
         <carbonite.version>1.5.0</carbonite.version>
